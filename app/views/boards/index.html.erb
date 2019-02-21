@@ -1,0 +1,7 @@
+<h1>Billboard List</h1>
+<ul>
+<% @boards.each do |board| %>
+  <li><%= link_to board.name , board_path(board) %></li>
+<% end %>
+</ul>
+<%= link_to 'Add Billboard', new_board_path %>

@@ -1,0 +1,11 @@
+<h1><%= @artist.id ? 'Edit Artist Name' : 'Add Artist' %></h1>
+<hr />
+<%= form_with(model: @artist, local: true, class: "ui form") do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name, required: true, placeholder: "Artist Name" %>
+
+  <%= f.label :genre %>
+  <%= f.text_field :genre, required: true, placeholder: "Artist Genre" %>
+
+  <%= f.submit %>
+<% end %>
