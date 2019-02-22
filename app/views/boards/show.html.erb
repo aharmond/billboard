@@ -1,5 +1,9 @@
 <h1><%= @board.name %></h1>
 <p><%= @board.description %><p>
+<% @board.songs.each do |song| %>
+<%= song.billboard_rank %> <%= song.name %>
+<% end %>
+<%= link_to 'Add Song to Billboard', song_list_path(@board) %>
 <%= link_to 'Edit Board', edit_board_path %>
 <%= link_to 'Remove Board', @board, method: :delete %>
 <%= link_to 'Board Index', boards_path %>

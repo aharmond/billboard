@@ -1,0 +1,4 @@
+<h1>Which song do you want to add to the billboard?</h1>
+<% @songs.each do |song| %>
+<%= link_to song.name, add_song_billboard_path(@board, song) %>
+<% end %>

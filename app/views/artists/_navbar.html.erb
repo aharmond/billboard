@@ -1,0 +1,4 @@
+<%= link_to 'Department Index', root_path %>
+<% Department.all.each do |department| %>
+<%= link_to department.name, department_path(department) %>
+<% end %>

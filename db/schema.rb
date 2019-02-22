@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2019_02_21_221649) do
     t.string "name"
     t.integer "billboard_rank"
     t.string "album"
+    t.integer "track_number"
     t.integer "year"
     t.bigint "artist_id"
     t.bigint "board_id"

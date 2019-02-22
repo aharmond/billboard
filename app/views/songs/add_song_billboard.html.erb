@@ -1,0 +1,7 @@
+Adding <%= @song.name %> to <%= @board.name %>
+<%= form_with(model: [@board, @song], local: true, class: "ui form") do |f| %>
+  <%= f.label :billboard_rank %>
+  <%= f.text_field :billboard_rank, required: true, placeholder: "What Rank?" %>
+  <%= f.hidden_field :board_id, :value => @board.id %>
+  <%= f.submit %>
+<% end %>
