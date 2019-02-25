@@ -6,11 +6,11 @@ class BoardsController < ApplicationController
   end
 
   def show
+    @rankings = Board.set_rankings(@board.id)
   end
 
   def new
     @board = Board.new
-    render partial: "form"
   end
 
   def create
@@ -24,7 +24,6 @@ class BoardsController < ApplicationController
   end
 
   def edit
-    render partial: "form"
   end
   
   def update
@@ -36,6 +35,7 @@ class BoardsController < ApplicationController
   end
 
   def destroy
+    Board.remove_songs(@board.id)
     @board.destroy
     redirect_to boards_path
   end

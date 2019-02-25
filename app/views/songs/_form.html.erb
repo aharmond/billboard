@@ -1,17 +1,24 @@
-<h1><%= @song.id ? "Edit Song" : "Add Song" %></h1>
-<%= form_with(model: [@artist, @song], local: true, class: "ui form") do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name, required: true, placeholder: "Song Name" %>
-
-  <%= f.label :album %>
-  <%= f.text_field :album, required: true, placeholder: "Album Name" %>
-
-  <%= f.label :track_number %>
-  <%= f.text_field :track_number, required: true, placeholder: "Track Number" %>
-
-  <%= f.label :year %>
-  <%= f.text_field :year, required: true, placeholder: "Song Year" %>
-
-  <%= f.submit %>
-<% end %>
+<h1 class="ui center aligned header"><%= @song.id ? "Edit Song" : "Add Song" %></h1>
+<div class="ui form"><%= form_with(model: [@artist, @song], local: true) do |f| %>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name, required: true, placeholder: "Song Name" %>
+  </div>
+  <div class="field">
+    <%= f.label :album %>
+    <%= f.text_field :album, required: true, placeholder: "Album Name" %>
+  </div>
+  <div class="field">
+    <%= f.label :track_number %>
+    <%= f.text_field :track_number, required: true, placeholder: "Track Number" %>
+  </div>
+  <div class="field">
+    <%= f.label :year %>
+    <%= f.text_field :year, required: true, placeholder: "Song Year" %>
+  </div>
+  <button class="ui green button" type="submit">Submit</button>
+  <% end %>
+</div>
+<div class="ui hidden divider"></div>
+<%= link_to 'Back', artist_path(@artist), class: "ui basic button" %>
   

@@ -1,7 +1,8 @@
-<h1>Artist Index</h1>
-<ul>
+<h1 class="ui center aligned header">Artist Index</h1>
+<div class="ui section divider"></div>
+<ul class="ui list">
 <% @artists.each do |artist| %>
-  <li><%= link_to artist.name , artist_path(artist) %></li>
+  <li class="item"><%= link_to artist.name , artist_path(artist) %></li>
 <% end %>
 </ul>
-<%= link_to 'Add Artist', new_artist_path %>
+<div class="ui horizontal divider"><%= link_to 'Add Artist', new_artist_path %></div>

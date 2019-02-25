@@ -1,4 +1,14 @@
-<%= link_to 'Department Index', root_path %>
-<% Department.all.each do |department| %>
-<%= link_to department.name, department_path(department) %>
-<% end %>
+<div class="ui secondary menu">
+  <div class="item">
+    <%= link_to 'Artist Index', artists_path, class: "ui small primary button" %>
+  </div>
+  <% Artist.all.each do |artist| %>
+    <div class="item">  
+      <%= link_to artist.name, artist_path(artist), class: "ui small button"  %>
+    </div>  
+  <% end %>
+  <div class="item">
+    <%= link_to 'Billboard Index', root_path, class: "ui small button" %>
+  </div>
+</div>
+<div class="ui clearing divider"></div>

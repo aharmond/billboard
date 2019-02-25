@@ -1,7 +1,16 @@
-<h1><%= @artist.name %> Songs</h1>
-<ul><% @artist.songs.each do |song| %>
-  <li><%= song.name %></li>
-  <%= link_to 'Edit Song', edit_artist_song_path(@artist, song) %>
-  <%= link_to 'Delete Song', artist_song_path(@artist, song), method: :delete %>
-<% end %><ul>
-<%= link_to 'Return to Artist', artist_path(@artist) %>
+<h1 class="ui center aligned header">Songs by <%= @artist.name %></h1>
+<ul class="ui list"><% @albums.each do |album| %>
+  <li class="item"><%= album.album %></li>
+        <ol class="ui list"><% @tracklist.each do |song| %>
+          <% if song.album == album.album %>
+            <li>
+              <%= song.name %>
+              <%= link_to 'Edit Song', edit_artist_song_path(@artist, song), class: "ui mini blue basic button" %>
+              <%= link_to 'Delete Song', artist_song_path(@artist, song), method: :delete, class: "ui mini red basic button" %>
+            </li>
+          <% end %>
+        <% end %> </ol>
+        <div class="ui hidden divider"></div>
+      <% end %><ul>
+      <div class="ui divider"></div>
+<%= link_to 'Return to Artist', artist_path(@artist), class: "ui button" %>

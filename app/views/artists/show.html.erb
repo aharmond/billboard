@@ -1,10 +1,19 @@
-<h1><%= @artist.name %></h1>
-<div><%= @artist.genre %></div>
-<% @artist.songs.each do |song| %>
-<%= song.name %>
-<% end %>
-<%= link_to 'Add Song', new_artist_song_path(@artist) %>
-<%= link_to 'Artist Songs', artist_songs_path(@artist) %>
-<%= link_to 'Edit Artist', edit_artist_path %>
-<%= link_to 'Delete Artist', @artist, method: :delete %>
-<%= link_to 'Back', artists_path %>
+<h1 class="ui center aligned header"><%= @artist.name %></h1>
+<h4>Genre: <%= @artist.genre %></h4>
+<div>Albums:</div>
+<ul>
+  <% @albums.each do |song| %>
+    <li class="item">
+      <%= song.album %>
+    </li>
+  <% end %>
+</ul>
+  <%= link_to 'Song List', artist_songs_path(@artist), class: "ui basic button" %>
+<div class="ui divider"></div>
+<div class="ui buttons">
+  <%= link_to 'Add Song', new_artist_song_path(@artist), class: "ui green basic button" %>
+  <%= link_to 'Edit Artist', edit_artist_path, class: "ui yellow basic button" %>
+  <%= link_to 'Delete Artist', @artist, method: :delete, class: "ui red basic button" %>
+</div>
+<div class="ui hidden divider"></div>
+  <%= link_to 'Back', artists_path, class: "ui button" %>

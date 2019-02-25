@@ -1,9 +1,19 @@
-<h1><%= @board.name %></h1>
-<p><%= @board.description %><p>
-<% @board.songs.each do |song| %>
-<%= song.billboard_rank %> <%= song.name %>
-<% end %>
-<%= link_to 'Add Song to Billboard', song_list_path(@board) %>
-<%= link_to 'Edit Board', edit_board_path %>
-<%= link_to 'Remove Board', @board, method: :delete %>
-<%= link_to 'Board Index', boards_path %>
+<h1 class="ui centered header"><%= @board.name %></h1>
+<p class="ui segment"><%= @board.description %><p>
+<div class="ui list">
+  <% @rankings.each do |song| %>
+    <div class="ui basic segment">
+      <%= song.billboard_rank %>. <%= song.name %>
+      <%= link_to 'Delete Song', remove_from_billboard_path(@board, song), method: :put, class: "ui tiny right floated button" %>
+      <%= link_to 'Edit Rank', add_song_billboard_path(@board, song), class: "ui tiny right floated button" %>
+    </div>
+  <% end %>
+</div>
+<div class="ui clearing divider"></div>
+<div class="ui buttons">
+  <%= link_to 'Add Song to Billboard', song_list_path(@board), class: "ui green basic button" %>
+  <%= link_to 'Edit Board', edit_board_path, class: "ui yellow basic button" %>
+  <%= link_to 'Remove Board', @board, method: :delete, class: "ui red basic button" %>
+</div>
+<div class="ui divider"></div>
+<%= link_to 'Board Index', boards_path, class: "ui fluid button" %>

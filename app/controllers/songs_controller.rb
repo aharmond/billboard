@@ -1,15 +1,16 @@
 class SongsController < ApplicationController
-  before_action :set_artist, except: [:song_list, :add_song_billboard, :update]
-  before_action :set_board, only: [:song_list, :add_song_billboard]
-  before_action :set_song, only: [:show, :edit, :update, :destroy, :add_song_billboard]
+  before_action :set_artist, except: [:song_list, :add_song_billboard, :update, :remove_from_billboard]
+  before_action :set_board, only: [:song_list, :add_song_billboard, :remove_from_billboard]
+  before_action :set_song, only: [:show, :edit, :update, :destroy, :add_song_billboard, :remove_from_billboard]
 
   def index
     @songs = @artist.songs
+    @albums = Artist.set_albums(@artist.id)
+    @tracklist = Artist.set_tracklist(@artist.id)
   end
 
   def new
     @song = @artist.songs.new
-    render partial: "form"
   end
 
   def create
@@ -23,14 +24,22 @@ class SongsController < ApplicationController
   end
 
   def edit
-    render partial: "form"
   end
 
   def update
-    if @song.update(song_params)
-      redirect_to artist_songs_path(@song.artist_id)
-    else
-      render :edit
+    current_uri = request.env['PATH_INFO']
+    if current_uri.include?('artists')
+      if @song.update(song_params)
+        redirect_to artist_songs_path(@song.artist_id)
+      else
+        render :edit
+      end
+    elsif current_uri.include?('boards')
+      if @song.update(song_params)
+        redirect_to board_path(@song.board_id)
+      else
+        render :add_song_billboard
+      end
     end
   end
 
@@ -40,10 +49,17 @@ class SongsController < ApplicationController
   end
 
   def song_list
-    @songs = Song.all.sort_by { |s| [s.album, s.year]}
+    @songs = Song.where(board_id: nil)
+      
+    @songs.sort_by { |s| [s.album, s.year]}
   end
 
   def add_song_billboard
+  end
+
+  def remove_from_billboard
+    @song.update(board_id: nil)
+    redirect_to board_path(@board)
   end
 
   private
@@ -61,6 +77,6 @@ class SongsController < ApplicationController
   end
 
   def song_params
-    params.require(:song).permit(:name, :album, :year, :billboard_rank, :board_id)
+    params.require(:song).permit(:name, :album, :year, :billboard_rank, :board_id, :track_number)
   end
 end

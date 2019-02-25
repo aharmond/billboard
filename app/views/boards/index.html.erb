@@ -1,7 +1,8 @@
-<h1>Billboard List</h1>
-<ul>
+<h1 class= "ui center aligned header" >Billboard List</h1>
+<div class="ui section divider"></div>
+<ul class="ui list">
 <% @boards.each do |board| %>
-  <li><%= link_to board.name , board_path(board) %></li>
+  <li class="item"><%= link_to board.name , board_path(board) %></li>
 <% end %>
 </ul>
-<%= link_to 'Add Billboard', new_board_path %>
+<div class="ui horizontal divider"> <%= link_to 'Add Billboard', new_board_path %> </div>

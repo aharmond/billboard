@@ -2,15 +2,15 @@ class ArtistsController < ApplicationController
   before_action :set_artist, only: [:show, :edit, :update, :destroy]
   
   def index
-    @artists = Artist.all.sort_by{|a| a.name}
+    @artists = Artist.all.sort_by{|a| a.name} 
   end
 
   def show
+    @albums = Artist.set_albums(@artist.id)
   end
 
   def new
     @artist = Artist.new
-    render partial: "form"
   end
 
   def create
@@ -24,7 +24,6 @@ class ArtistsController < ApplicationController
   end
 
   def edit
-    render partial: "form"
   end
 
   def update
