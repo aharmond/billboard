@@ -1,14 +1,14 @@
 <h1 class="ui centered header"><%= @board.name %></h1>
 <p class="ui segment"><%= @board.description %><p>
-<div class="ui list">
-  <% @rankings.each do |song| %>
-    <div class="ui basic segment">
-      <%= song.billboard_rank %>. <%= song.name %>
+<ol class="ui list">
+  <% @board.songs.each do |song| %>
+    <li class="item">
+      <%= song.name %>
       <%= link_to 'Delete Song', remove_from_billboard_path(@board, song), method: :put, class: "ui tiny right floated button" %>
       <%= link_to 'Edit Rank', add_song_billboard_path(@board, song), class: "ui tiny right floated button" %>
-    </div>
+    </li>
   <% end %>
-</div>
+</ol>
 <div class="ui clearing divider"></div>
 <div class="ui buttons">
   <%= link_to 'Add Song to Billboard', song_list_path(@board), class: "ui green basic button" %>

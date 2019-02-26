@@ -1,5 +1,7 @@
 class Board < ApplicationRecord
-  has_many :songs
+  has_many :boardssongs
+  has_many :songs, through: :boardssongs
+  belongs_to :user
 
   def self.set_rankings(id)
     @board = Board.find(id)
@@ -8,6 +10,10 @@ class Board < ApplicationRecord
 
   def self.remove_songs(id)
     @board = Board.find(id)
-    @board.songs.update_all(board_id: nil)
+    Boardssong.all.each do |d|
+      if d.board_id == @board.id
+        d.destroy
+      end
+    end
   end
 end

@@ -1,4 +1,4 @@
-<h1 class= "ui center aligned header" >Billboard List</h1>
+<h1 class= "ui center aligned header" ><%= current_user.username %>'s Billboard List</h1>
 <div class="ui section divider"></div>
 <ul class="ui list">
 <% @boards.each do |board| %>
@@ -6,3 +6,5 @@
 <% end %>
 </ul>
 <div class="ui horizontal divider"> <%= link_to 'Add Billboard', new_board_path %> </div>
+<%= link_to 'Edit Account', edit_user_registration_path(current_user), class: "ui basic yellow button" %>
+<%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: "ui basic red button" %>

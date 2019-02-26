@@ -1,8 +1,9 @@
 class BoardsController < ApplicationController
   before_action :set_board, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
   
   def index
-    @boards = Board.all.sort_by{ |b| [ b.year, b.name ]}
+    @boards = current_user.boards.all.sort_by{ |b| [ b.year, b.name ]}
   end
 
   def show
@@ -14,7 +15,7 @@ class BoardsController < ApplicationController
   end
 
   def create
-    @board = Board.new(board_params)
+    @board = current_user.boards.new(board_params)
 
     if @board.save
       redirect_to board_path(@board)
@@ -43,7 +44,7 @@ class BoardsController < ApplicationController
   private
   
   def set_board
-    @board = Board.find(params[:id])
+    @board = current_user.boards.find(params[:id])
   end
 
   def board_params

@@ -1,10 +1,10 @@
-<h1><%= @song.board_id ? "Edit #{@song.name} Ranking" : "Add #{@song.name} to #{@board.name}" %></h1>
+<h1><%= @song.board_ids != @board.id ? "Edit #{@song.name} Ranking" : "Add #{@song.name} to #{@board.name}" %></h1>
 <div class="ui form"><%= form_with(model: [@board, @song], local: true) do |f| %>
   <div class="field">
   <%= f.label :billboard_rank %>
   <%= f.text_field :billboard_rank, required: true, placeholder: "What Rank?" %>
   </div>
-  <%= f.hidden_field :board_id, :value => @board.id %>
+  <%= f.hidden_field :board_ids, :value => @board.id %>
   <button class="ui button" type="submit"><%= @song.billboard_rank ? "Change Rank" : "Add Song" %></button>
 <% end %>
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_21_221649) do
+ActiveRecord::Schema.define(version: 2019_02_25_230933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,17 @@ ActiveRecord::Schema.define(version: 2019_02_21_221649) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_boards_on_user_id"
+  end
+
+  create_table "boardssongs", force: :cascade do |t|
+    t.bigint "board_id"
+    t.bigint "song_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["board_id"], name: "index_boardssongs_on_board_id"
+    t.index ["song_id"], name: "index_boardssongs_on_song_id"
   end
 
   create_table "songs", force: :cascade do |t|
@@ -37,13 +48,26 @@ ActiveRecord::Schema.define(version: 2019_02_21_221649) do
     t.integer "track_number"
     t.integer "year"
     t.bigint "artist_id"
-    t.bigint "board_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["artist_id"], name: "index_songs_on_artist_id"
-    t.index ["board_id"], name: "index_songs_on_board_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  add_foreign_key "boards", "users"
+  add_foreign_key "boardssongs", "boards"
+  add_foreign_key "boardssongs", "songs"
   add_foreign_key "songs", "artists"
-  add_foreign_key "songs", "boards"
 end

@@ -2,7 +2,7 @@
   <div class="item">
     <%= link_to 'Billboard Index', root_path, class: "ui small primary button" %>
   </div>
-  <% Board.all.each do |board| %>
+  <% current_user.boards.each do |board| %>
     <div class="item">
       <%= link_to board.name, board_path(board), class: "ui small button" %>
     </div>

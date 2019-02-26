@@ -2,6 +2,7 @@ class SongsController < ApplicationController
   before_action :set_artist, except: [:song_list, :add_song_billboard, :update, :remove_from_billboard]
   before_action :set_board, only: [:song_list, :add_song_billboard, :remove_from_billboard]
   before_action :set_song, only: [:show, :edit, :update, :destroy, :add_song_billboard, :remove_from_billboard]
+  before_action :authenticate_user!, only: [:song_list, :add_song_billboard, :remove_from_billboard]
 
   def index
     @songs = @artist.songs
@@ -36,7 +37,8 @@ class SongsController < ApplicationController
       end
     elsif current_uri.include?('boards')
       if @song.update(song_params)
-        redirect_to board_path(@song.board_id)
+        set_board
+        redirect_to board_path(@board)
       else
         render :add_song_billboard
       end
@@ -44,12 +46,13 @@ class SongsController < ApplicationController
   end
 
   def destroy
+    Song.remove_boards(@song.id)
     @song.destroy
     redirect_to artist_songs_path(@artist)
   end
 
   def song_list
-    @songs = Song.where(board_id: nil)
+    @songs = Song.find_songs_not_on_billboard(@board)
       
     @songs.sort_by { |s| [s.album, s.year]}
   end
@@ -77,6 +80,6 @@ class SongsController < ApplicationController
   end
 
   def song_params
-    params.require(:song).permit(:name, :album, :year, :billboard_rank, :board_id, :track_number)
+    params.require(:song).permit(:name, :album, :year, :billboard_rank, :board_ids, :track_number)
   end
 end
